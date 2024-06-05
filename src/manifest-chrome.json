@@ -19,6 +19,8 @@
         "*://pbs.twimg.com/media/*",
         "*://tweetdeck.twitter.com/*",
         "*://mobile.twitter.com/*",
+        "*://x.com/*",
+        "*://mobile.x.com/*"
       ],
       "js": [
         "js/jszip.min.js",
@@ -36,6 +38,8 @@
         "*://pbs.twimg.com/media/*",
         "*://tweetdeck.twitter.com/*",
         "*://mobile.twitter.com/*",
+        "*://x.com/*",
+        "*://mobile.x.com/*"
       ],
       "js": ["js/twOpenOriginalImage.user.js"],
       "run_at": "document_end",
@@ -58,11 +62,13 @@
   "host_permissions": [
     "*://*.twimg.com/*",
     "*://*.twitter.com/*",
+    "*://*.x.com/*"
   ],
   "web_accessible_resources": [
     {
       "matches": [
         "*://*.twitter.com/*",
+        "*://*.x.com/*"
       ],
       "resources": ["js/*.js"]
     }
