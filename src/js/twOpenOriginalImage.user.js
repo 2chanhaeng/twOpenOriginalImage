@@ -116,7 +116,7 @@ if ( IS_TOUCHED ) {
 }
     
 
-if ( /^https:\/\/twitter\.com\/i\/cards/.test( w.location.href ) ) {
+if ( /^https:\/\/(twitter|x)\.com\/i\/cards/.test( w.location.href ) ) {
     // https://twitter.com/i/cards/～ では実行しない
     return;
 }
@@ -166,8 +166,8 @@ var DEBUG = false,
         };
     }, // end of make_is_url_function()
     
-    is_twitter = make_is_url_function( /^https?:\/\/(?:mobile\.)?twitter\.com\// ),
-    is_tweetdeck = make_is_url_function( /^https?:\/\/tweetdeck\.twitter\.com\// ),
+    is_twitter = make_is_url_function( /^https?:\/\/(?:mobile\.)?(twitter|x)\.com\// ),
+    is_tweetdeck = make_is_url_function( /^https?:\/\/tweetdeck\.(twitter|x)\.com\// ),
     is_media_url = make_is_url_function( /^https?:\/\/pbs\.twimg\.com\/media\// ),
     is_react_page = ( () => {
         const
@@ -844,7 +844,7 @@ function get_img_url( img_url, kind, old_format ) {
 
 
 function get_img_url_orig( img_url ) {
-    if ( /^https?:\/\/ton\.twitter\.com\//.test( img_url ) ) {
+    if ( /^https?:\/\/ton\.(twitter|x)\.com\//.test( img_url ) ) {
         // DM の画像は :orig が付かないものが最大
         return get_img_url( img_url );
     }
@@ -873,7 +873,7 @@ function get_img_filename( img_url ) {
 
 
 function get_tweet_id_from_tweet_url( tweet_url ) {
-    if ( tweet_url.match( /^(?:https?:\/\/(?:mobile\.)?twitter\.com)?\/[^\/]+\/status(?:es)?\/(\d+).*$/ ) ) {
+    if ( tweet_url.match( /^(?:https?:\/\/(?:mobile\.)?(twitter|x)\.com)?\/[^\/]+\/status(?:es)?\/(\d+).*$/ ) ) {
         return RegExp.$1;
     }
     return null;
@@ -942,7 +942,9 @@ function get_tweet_link_on_react_twitter( tweet ) {
         timestamp_container = tweet.querySelector( [
             'a[role="link"][href^="/"][href*="/status/"] time:last-of-type',
             'a[role="link"][href^="https://twitter.com/"][href*="/status/"] time:last-of-type',
+            'a[role="link"][href^="https://x.com/"][href*="/status/"] time:last-of-type',
             'a[role="link"][href^="https://mobile.twitter.com/"][href*="/status/"] time:last-of-type',
+            'a[role="link"][href^="https://mobile.x.com/"][href*="/status/"] time:last-of-type',
         ].join( ',' ) );
     
     if ( timestamp_container ) {
@@ -1426,7 +1428,7 @@ function save_base64( filename, base64, mimetype ) {
 
 
 function get_filename_prefix( tweet_url ) {
-    return tweet_url.replace( /^https?:\/\/(?:mobile\.)?twitter\.com\/([^\/]+)\/status(?:es)?\/(\d+).*$/, '$1-$2' );
+    return tweet_url.replace( /^https?:\/\/(?:mobile\.)?(twitter|x)\.com\/([^\/]+)\/status(?:es)?\/(\d+).*$/, '$1-$2' );
 } // end of get_filename_prefix()
 
 
@@ -1695,7 +1697,7 @@ function initialize_download_helper() {
     
     var img_url = w.location.href,
         img_referrer = d.referrer,
-        is_child = /^https?:\/\/(?:tweetdeck\.|mobile\.)?twitter\.com\//.test( img_referrer ),
+        is_child = /^https?:\/\/(?:tweetdeck\.|mobile\.)?(twitter|x)\.com\//.test( img_referrer ),
         link = ( is_ie() ) ? null : create_download_link( img_url );
     
     if ( link && is_child ) {
